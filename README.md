@@ -140,6 +140,10 @@ cd nome-do-repo
 
 # Instalar dependências
 npm install
+#instalação do tailwindcss
+
+npm install tailwindcss @tailwindcss/postcss
+colar isso no index.css: @import "tailwindcss";
 
 # Rodar o projeto
 npm run dev
