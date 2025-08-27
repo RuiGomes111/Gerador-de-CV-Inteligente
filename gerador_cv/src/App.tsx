@@ -1,8 +1,8 @@
 function App() {
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-gray-900 ">
-      <h1 className="text-4xl font-bold text-blue-600">🚀 Gerador de Currículo Inteligente com
-Preview em Tempo Real !</h1>
+    <div className="h-screen grid grid-cols-2  bg-gray-900 ">
+      <div className="bg-[#272727]"></div>
+      <div className="bg-[#EFD09E]"></div>
 
       
     </div>
