@@ -6,11 +6,11 @@ interface Habilidade {
   nivel: "Básico" | "Intermediário" | "Avançado";
 }
 
-Interface Props {
-  onAddHabilidade: (habilidade: Habilidade) => void;
+interface Props {
+  onAdicionarHabilidade: (habilidade: Habilidade) => void;
 }
 
-export function FormularioHabilidades({ onAddHabilidade }: Props) {
+export function FormularioHabilidades({ onAdicionarHabilidade }: Props) {
   const [nome, setNome] = useState("");
   const [nivel, setNivel] = useState<Habilidade["nivel"]>("Básico");
 
@@ -27,7 +27,7 @@ const handleAdicionar = () => {
       nivel: nivel 
     };
 
-    onAddHabilidade(novaHabilidade);
+    onAdicionarHabilidade(novaHabilidade);
     setNome("");
   };
 
@@ -46,7 +46,7 @@ const handleAdicionar = () => {
       </div>
 
       <div>
-        <label>Nível de Conhecimento:</label>
+        <label>Nível</label>
         <select 
         value={nivel} 
         onChange={(e) => setNivel(e.target.value as Habilidade["nivel"])}>
@@ -58,6 +58,7 @@ const handleAdicionar = () => {
 
       <button onClick={handleAdicionar}>
         Adicionar Habilidade
-        </button>
+        </button >
     </div>
-  ); 
+  );
+}
