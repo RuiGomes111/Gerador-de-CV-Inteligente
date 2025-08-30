@@ -45,11 +45,11 @@ const handleAdicionar = () => {
 
   return (
     <div>
-      <h2> Gerenciar Habilidades:</h2>
+      <h2> Digite suas habilidades abaixo:</h2>
 
       <div>
         <div>
-          <label>Nome da Habilidade:</label>
+          <label></label>
   <input
     type="text"
     value={nome}
@@ -80,10 +80,10 @@ const handleAdicionar = () => {
     </div>
 
     <div>
-      <h3>Habilidades Adicionadas:</h3>
+      <h3></h3>
 
       {habilidades.length === 0 ? (
-        <p>Nenhuma habilidade adicionada.</p>
+        <p></p>
       ) : (
         <div>
           {habilidades.map((habilidade) => (
