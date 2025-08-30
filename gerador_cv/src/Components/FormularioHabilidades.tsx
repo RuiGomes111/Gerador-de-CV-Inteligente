@@ -6,20 +6,18 @@ interface Habilidade {
   nivel: "Básico" | "Intermediário" | "Avançado";
 }
 
-interface Props {
-  onAdicionarHabilidade: (habilidade: Habilidade) => void;
-}
-
 export function FormularioHabilidades({ onAdicionarHabilidade }: Props) {
   const [nome, setNome] = useState("");
   const [nivel, setNivel] = useState<Habilidade["nivel"]>("Básico");
-
+  const [erro, setErro] = useState("");
 //validar se nome vazio
 const handleAdicionar = () => {
     if (nome.trim() === "") {
-      alert("Digite aqui sua habilidade.");
+      setErro("Preencha habilidades.");
       return;
     }
+
+    setErro("");
 
     const novaHabilidade: Habilidade = {
       id: Date.now(),
