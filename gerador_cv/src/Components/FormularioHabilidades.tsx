@@ -6,11 +6,23 @@ interface Habilidade {
   nivel: "Básico" | "Intermediário" | "Avançado";
 }
 
-export function FormularioHabilidades({ onAdicionarHabilidade }: Props) {
+interface Props {
+  habilidades: Habilidade[];
+  onAdicionarHabilidade: (habilidade: Omit<Habilidade, 'id'>) => void;
+onRemoverHabilidade: (id: number) => void;
+}
+
+export function FormularioHabilidades({
+  habilidades,
+  onAdicionarHabilidade,
+  onRemoverHabilidade 
+}: Props) {
   const [nome, setNome] = useState("");
   const [nivel, setNivel] = useState<Habilidade["nivel"]>("Básico");
+
   const [erro, setErro] = useState("");
 //validar se nome vazio
+
 const handleAdicionar = () => {
     if (nome.trim() === "") {
       setErro("Preencha habilidades.");
@@ -19,28 +31,36 @@ const handleAdicionar = () => {
 
     setErro("");
 
-    const novaHabilidade: Habilidade = {
-      id: Date.now(),
+    onAdicionarHabilidade({
       nome: nome.trim(),
-      nivel: nivel 
-    };
+      nivel
+    });
 
-    onAdicionarHabilidade(novaHabilidade);
     setNome("");
+  };
+
+  const handleRemover = (id: number) => {
+    onRemoverHabilidade(id);
   };
 
   return (
     <div>
-      <h2> Adicionar Habilidades:</h2>
+      <h2> Gerenciar Habilidades:</h2>
 
       <div>
-        <label>Habilidade:</label>
-        <input
-          type="text"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          placeholder="Ex: JavaScript, React, etc."
-          />
+        <div>
+          <label>Nome da Habilidade:</label>
+  <input
+    type="text"
+    value={nome}
+    onChange={(e) => {
+      setNome(e.target.value);
+      if (erro) setErro("");
+    }}
+    placeholder="Ex: JavaScript, React, etc."
+    />
+
+          {erro && <p>{erro}</p>}
       </div>
 
       <div>
@@ -58,5 +78,29 @@ const handleAdicionar = () => {
         Adicionar Habilidade
         </button >
     </div>
-  );
+
+    <div>
+      <h3>Habilidades Adicionadas:</h3>
+
+      {habilidades.length === 0 ? (
+        <p>Nenhuma habilidade adicionada.</p>
+      ) : (
+        <div>
+          {habilidades.map((habilidade) => (
+            <div key={habilidade.id}>
+              <div>
+                <span>{habilidade.nome}</span>
+                <span>{habilidade.nivel}</span>
+                </div>
+
+              <button onClick={() => handleRemover(habilidade.id)}>
+                Remover
+                </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+  ); 
 }
