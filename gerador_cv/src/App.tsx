@@ -10,12 +10,17 @@ interface Habilidade {
 function App() {
 
 const [habilidades, setHabilidades] = useState<Habilidade[]>([]);
+
 const handleAdicioanarHabilidade = (habilidade: Omit<Habilidade, "id">) => {
   const novaHabilidade: Habilidade = {
     ...habilidade,
-    id: habilidades.length > 0 ? habilidades[habilidades.length - 1].id + 1 : 1,
+    id: Date.now(),
   };
   setHabilidades([...habilidades, novaHabilidade]);
+};
+
+const handleRemoverHabilidade = (id: number) => {
+  setHabilidades(habilidades.filter(hab => hab.id !== id));
 };
 
     return (
@@ -24,24 +29,17 @@ const handleAdicioanarHabilidade = (habilidade: Omit<Habilidade, "id">) => {
         <FormularioHabilidades
           habilidades={habilidades}
           onAdicionarHabilidade={handleAdicioanarHabilidade}
-          onRemoverHabilidade={(id: number) => setHabilidades(habilidades.filter(hab => hab.id !== id))}
+          onRemoverHabilidade={handleRemoverHabilidade}
         />
+        
+        <div>
+        <h2>Habilidades Adicionadas:</h2>
+        {habilidades.map((hab) => (
+          <div key={hab.id}>
+            {hab.nome} - {hab.nivel}
         </div>
-
-      <div className="bg-[#EFD09E]">
-        <div className="Habilidades">
-          {habilidades.length === 0 ? (
-            <p>Ainda não foram adicionadas habilidades</p>
-          ) : (
-            <ul>
-              {habilidades.map((hab) => (
-                <li key={hab.id}>
-                  <strong>{hab.nome}</strong> - {hab.nivel}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        ))}
+      </div>
       </div>
     </div>
   );
