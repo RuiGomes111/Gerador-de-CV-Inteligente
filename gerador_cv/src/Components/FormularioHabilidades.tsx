@@ -17,7 +17,7 @@ export function FormularioHabilidades({ onAddHabilidade }: Props) {
 //validar se nome vazio
 const handleAdicionar = () => {
     if (nome.trim() === "") {
-      alert("Por favor, digite aqui sua habilidade.");
+      alert("Digite aqui sua habilidade.");
       return;
     }
 
@@ -30,3 +30,34 @@ const handleAdicionar = () => {
     onAddHabilidade(novaHabilidade);
     setNome("");
   };
+
+  return (
+    <div>
+      <h2> Adicionar Habilidades:</h2>
+
+      <div>
+        <label>Habilidade:</label>
+        <input
+          type="text"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          placeholder="Ex: JavaScript, React, etc."
+          />
+      </div>
+
+      <div>
+        <label>Nível de Conhecimento:</label>
+        <select 
+        value={nivel} 
+        onChange={(e) => setNivel(e.target.value as Habilidade["nivel"])}>
+          <option value="Básico">Básico</option>
+          <option value="Intermediário">Intermediário</option>
+          <option value="Avançado">Avançado</option>
+        </select>
+      </div>
+
+      <button onClick={handleAdicionar}>
+        Adicionar Habilidade
+        </button>
+    </div>
+  ); 
