@@ -1,9 +1,11 @@
-export interface Resume {
+export type CurriculumState = {
   personal: {
     name: string;
     email: string;
     phone: string;
     linkedin: string;
-    summary: string;
+    resume: string;
   };
-}
+  skills: string[];
+  experiences: { title: string; company: string }[];
+};
