@@ -1,13 +1,12 @@
 import type { CurriculumState, Experience, Skill } from "../types";
 
-
 export type CurriculumAction =
   | { type: "SET_PERSONAL"; payload: CurriculumState["personal"] }
   | { type: "ADD_EXPERIENCE"; payload: Experience }
+  | { type: "REMOVE_EXPERIENCE"; payload: string } // id da experiência
   | { type: "ADD_SKILL"; payload: Skill }
-  | { type: "REMOVE_SKILL"; payload: string }; // id da skill
+  | { type: "REMOVE_SKILL"; payload: string };
 
-// ✅ Reducer atualizado
 export function curriculumReducer(
   state: CurriculumState,
   action: CurriculumAction
@@ -17,6 +16,11 @@ export function curriculumReducer(
       return { ...state, personal: action.payload };
     case "ADD_EXPERIENCE":
       return { ...state, experiences: [...state.experiences, action.payload] };
+    case "REMOVE_EXPERIENCE":
+      return {
+        ...state,
+        experiences: state.experiences.filter(exp => exp.id !== action.payload),
+      };
     case "ADD_SKILL":
       return { ...state, skills: [...state.skills, action.payload] };
     case "REMOVE_SKILL":
