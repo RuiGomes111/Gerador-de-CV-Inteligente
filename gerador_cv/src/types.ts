@@ -28,4 +28,4 @@ export type CurriculumState = {
     skills: Skill[];
     experiences: Experience[];
 }
->>>>>>> origin/estadoGlobal
+
