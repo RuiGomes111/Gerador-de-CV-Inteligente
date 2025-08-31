@@ -1,4 +1,4 @@
-
+// Tipos gerais
 export type PersonalInfo = {
     name: string;
     email: string;
@@ -13,19 +13,20 @@ export type Skill = {
     level: "Básico" | "Intermediário" | "Avançado";
 };
 
+// Tipo Experience unificado
 export type Experience = {
     id: string;
     company: string;
-    position: string;
-    start: string;
-    end?: string;
+    position: string;  // substitui "role"
+    start: string;     // substitui "startDate"
+    end?: string;      // substitui "endDate"
     current: boolean;
     description: string;
 };
 
+// Estado completo do currículo
 export type CurriculumState = {
     personal: PersonalInfo;
     skills: Skill[];
     experiences: Experience[];
-}
-
+};
