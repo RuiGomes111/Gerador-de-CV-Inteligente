@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import type { Skill } from "../../types";
 
 export default function FormularioHabilidades() {
-  const { state, dispatch } = useCurriculum(); // agora pegamos também o state
+  const { state, dispatch } = useCurriculum(); 
   const [skill, setSkill] = useState("");
 
   const addSkill = () => {
