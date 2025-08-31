@@ -1,12 +1,12 @@
+import { CurriculumProvider } from "./context/CurriculumContext";
+import { MainLayout } from "./components/MainLayout";
+
 function App() {
   return (
-    <div className="h-screen grid grid-cols-2  bg-gray-900 ">
-      <div className="bg-[#272727]"></div>
-      <div className="bg-[#EFD09E]"></div>
-
-      
-    </div>
-  )
+    <CurriculumProvider>
+      <MainLayout />
+    </CurriculumProvider>
+  );
 }
 
-export default App
+export default App;
