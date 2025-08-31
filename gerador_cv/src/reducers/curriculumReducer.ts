@@ -1,11 +1,14 @@
-import type { CurriculumState } from "../types";
+import type { CurriculumState, Experience, Skill } from "../types";
 
 export type CurriculumAction =
   | { type: "SET_PERSONAL"; payload: CurriculumState["personal"] }
-  | { type: "ADD_EXPERIENCE"; payload: { title: string; company: string } }
-  | { type: "ADD_SKILL"; payload: string };
+  | { type: "ADD_EXPERIENCE"; payload: Experience }
+  | { type: "ADD_SKILL"; payload: Skill };
 
-export function curriculumReducer(state: CurriculumState, action: CurriculumAction): CurriculumState {
+export function curriculumReducer(
+  state: CurriculumState,
+  action: CurriculumAction
+): CurriculumState {
   switch (action.type) {
     case "SET_PERSONAL":
       return { ...state, personal: action.payload };

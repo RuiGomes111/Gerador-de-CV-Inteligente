@@ -20,24 +20,24 @@ export default function ExperienceItem({ exp, onChange, onRemove }: ExperienceIt
       <input
         type="text"
         placeholder="Cargo"
-        value={exp.role}
-        onChange={(e) => onChange(exp.id, "role", e.target.value)}
+        value={exp.position} // atualizado
+        onChange={(e) => onChange(exp.id, "position", e.target.value)} // atualizado
         className="w-full border p-2 rounded mb-2"
       />
 
       <div className="flex gap-2 mb-2">
         <input
           type="date"
-          value={exp.startDate}
-          onChange={(e) => onChange(exp.id, "startDate", e.target.value)}
+          value={exp.start} // atualizado
+          onChange={(e) => onChange(exp.id, "start", e.target.value)} // atualizado
           className="border p-2 rounded"
         />
 
         {!exp.current && (
           <input
             type="date"
-            value={exp.endDate || ""}
-            onChange={(e) => onChange(exp.id, "endDate", e.target.value)}
+            value={exp.end || ""} // atualizado
+            onChange={(e) => onChange(exp.id, "end", e.target.value)} // atualizado
             className="border p-2 rounded"
           />
         )}

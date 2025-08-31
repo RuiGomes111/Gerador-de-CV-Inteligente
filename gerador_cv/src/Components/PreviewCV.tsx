@@ -45,7 +45,7 @@ export default function CurriculumPreview() {
                   key={i}
                   className="px-4 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
                 >
-                  {skill}
+                  {skill.name}
                 </li>
               ))}
             </ul>
@@ -53,20 +53,21 @@ export default function CurriculumPreview() {
         )}
 
         {/* Experiências */}
-        {state.experiences.length > 0 && (
-          <section className="mt-8">
-            <h2 className="text-xl font-semibold text-blue-700 mb-3">Experiências</h2>
-            {state.experiences.map((exp, i) => (
-              <div key={i} className="mb-6 border-l-4 border-blue-500 pl-4">
-                <h3 className="text-lg font-bold text-gray-800">{exp.role}</h3>
-                <p className="text-sm text-gray-600">
-                  {exp.company} | {exp.startDate} - {exp.endDate || "Atual"}
-                </p>
-                <p className="text-gray-700 mt-1">{exp.description}</p>
-              </div>
-            ))}
-          </section>
-        )}
+{state.experiences.length > 0 && (
+  <section className="mt-8">
+    <h2 className="text-xl font-semibold text-blue-700 mb-3">Experiências</h2>
+    {state.experiences.map((exp, i) => (
+      <div key={i} className="mb-6 border-l-4 border-blue-500 pl-4">
+        <h3 className="text-lg font-bold text-gray-800">{exp.position}</h3>
+        <p className="text-sm text-gray-600">
+          {exp.company} | {exp.start} - {exp.end || "Atual"}
+        </p>
+        <p className="text-gray-700 mt-1">{exp.description}</p>
+      </div>
+    ))}
+  </section>
+)}
+
       </div>
     </div>
   );
