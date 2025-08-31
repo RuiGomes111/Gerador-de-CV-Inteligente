@@ -1,2 +1,5 @@
 @import "tailwindcss";
 
+.page-break {
+  page-break-before: always;
+}
