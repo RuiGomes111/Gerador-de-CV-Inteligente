@@ -1,5 +1,5 @@
 import type { Experience } from "../types";
-import AIButton from "./AIButton";
+import AIButton from "../components/AIButton";
 
 interface ExperienceItemProps {
   exp: Experience;
