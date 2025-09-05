@@ -1,4 +1,5 @@
 import type { Experience } from "../types";
+import AIButton from "./AIButton";
 
 interface ExperienceItemProps {
   exp: Experience;
@@ -59,6 +60,14 @@ export default function ExperienceItem({ exp, onChange, onRemove }: ExperienceIt
         className="w-full border p-2 rounded mb-2"
       />
 
+      <AIButton
+      text={exp.description }
+      type="experience"
+      onSuccess={(improvedText)=> {
+        onChange(exp.id, "description", improvedText)   
+      }}
+      />
+      
       <button
         type="button"
         onClick={() => onRemove(exp.id)}
