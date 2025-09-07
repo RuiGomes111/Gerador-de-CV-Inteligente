@@ -4,7 +4,6 @@ import FormularioHabilidades from "./form/FormularioHabilidades";
 import PreviewCV from "./PreviewCV";
 
 
-
 export function MainLayout() {
   return (
     <div className="h-screen grid grid-cols-2">
