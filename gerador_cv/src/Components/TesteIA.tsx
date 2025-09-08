@@ -1,5 +1,5 @@
-import  { useState } from "react";
-import { mockMelhorarTexto } from "../mockIA";
+import { useState } from "react";
+import { improveTextGemini } from "../api/gemini";
 import toast from "react-hot-toast";
 
 export default function TesteIA() {
@@ -8,12 +8,17 @@ export default function TesteIA() {
   const [estado, setEstado] = useState<"idle" | "loading" | "sucesso" | "erro">("idle");
 
   const handleMelhorar = async () => {
+    if (!textoOriginal.trim()) return;
+
     setEstado("loading");
     toast.loading("Processando texto...");
     try {
-      const resultado = await mockMelhorarTexto(textoOriginal);
+      
+      const resultado = await improveTextGemini(textoOriginal, "resume");
+
       setTextoMelhorado(resultado);
       setEstado("sucesso");
+
       toast.dismiss();
       toast.success("Texto melhorado com sucesso!");
       console.log("Resultado da IA:", resultado);
@@ -21,6 +26,7 @@ export default function TesteIA() {
       setEstado("erro");
       toast.dismiss();
       toast.error("Erro ao melhorar o texto.");
+      console.error("Erro no TesteIA:", erro);
     }
   };
 
@@ -35,7 +41,9 @@ export default function TesteIA() {
       />
       <button
         className={`px-4 py-2 rounded text-white ${
-          estado === "loading" ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+          estado === "loading"
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-blue-600 hover:bg-blue-700"
         }`}
         onClick={handleMelhorar}
         disabled={estado === "loading" || textoOriginal.trim() === ""}
@@ -45,10 +53,9 @@ export default function TesteIA() {
 
       {estado === "sucesso" && (
         <div className="p-3 border rounded bg-green-50 mt-4 text-gray-800">
-  <strong className="block mb-1">Texto melhorado:</strong>
-  <p>{textoMelhorado}</p>
-</div>
-
+          <strong className="block mb-1">Texto melhorado:</strong>
+          <p>{textoMelhorado}</p>
+        </div>
       )}
     </div>
   );
