@@ -114,7 +114,8 @@ export default function CurriculumPreview() {
                     color: currentTheme.badgeText,
                   }}
                 >
-                  {skill.name}
+                  {skill.name} - 
+                 ( {skill.level})
                 </li>
               ))}
             </ul>
