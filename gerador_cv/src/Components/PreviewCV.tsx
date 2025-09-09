@@ -1,5 +1,5 @@
-import { useContext, useRef, useState } from "react";
-import { CurriculumContext } from "../context/CurriculumContext";
+import { useRef, useState } from "react";
+import { useCurriculum } from "../context/useCurriculum";
 import PDFExporter from "./PDFExporter";
 
 const themes = {
@@ -30,17 +30,15 @@ const themes = {
 };
 
 export default function CurriculumPreview() {
-  const context = useContext(CurriculumContext);
+  const { state } = useCurriculum();
   const printRef = useRef<HTMLDivElement>(null);
   const [theme, setTheme] = useState<keyof typeof themes>("classico");
 
-  if (!context) return null;
-  const { state } = context;
   const currentTheme = themes[theme];
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-    
+      {/* Botões de tema */}
       <div style={{ display: "flex", justifyContent: "center", gap: "1rem" }}>
         {Object.keys(themes).map((t) => (
           <button
@@ -74,21 +72,63 @@ export default function CurriculumPreview() {
         }}
       >
         {/* Cabeçalho */}
-        <div style={{ borderBottom: "1px solid #d1d5db", paddingBottom: "1rem" }}>
-          <h1 style={{ fontSize: "2.25rem", fontWeight: "700" }}>
-            {state.personal.name || "Seu Nome Aqui"}
-          </h1>
-          <div style={{ marginTop: "0.5rem", fontSize: "0.875rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <span>📧 {state.personal.email || "email@exemplo.com"}</span>
-            <span>📱 {state.personal.phone || "(+244) 000-000-000"}</span>
-            <span>🔗 {state.personal.linkedin || "linkedin.com/in/seuperfil"}</span>
+        <div
+          style={{
+            borderBottom: "1px solid #d1d5db",
+            paddingBottom: "1rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "1.5rem",
+          }}
+        >
+          {/* Foto de Perfil */}
+          {state.personal.photo && (
+            <img
+              src={state.personal.photo}
+              alt="Foto de perfil"
+              style={{
+                width: "100px",
+                height: "100px",
+                objectFit: "cover",
+                borderRadius: "50%",
+                border: `3px solid ${currentTheme.border}`,
+              }}
+            />
+          )}
+
+          <div>
+            <h1 style={{ fontSize: "2.25rem", fontWeight: "700" }}>
+              {state.personal.name || "Seu Nome Aqui"}
+            </h1>
+            <div
+              style={{
+                marginTop: "0.5rem",
+                fontSize: "0.875rem",
+                display: "flex",
+                gap: "1rem",
+                flexWrap: "wrap",
+              }}
+            >
+              <span>📧 {state.personal.email || "email@exemplo.com"}</span>
+              <span>📱 {state.personal.phone || "(+244) 000-000-000"}</span>
+              <span>
+                🔗 {state.personal.linkedin || "linkedin.com/in/seuperfil"}
+              </span>
+            </div>
           </div>
         </div>
 
         {/* Resumo */}
         {state.personal.resume && (
           <section style={{ marginTop: "1.5rem" }}>
-            <h2 style={{ fontSize: "1.25rem", fontWeight: "600", marginBottom: "0.5rem", color: currentTheme.accent }}>
+            <h2
+              style={{
+                fontSize: "1.25rem",
+                fontWeight: "600",
+                marginBottom: "0.5rem",
+                color: currentTheme.accent,
+              }}
+            >
               Resumo Profissional
             </h2>
             <p style={{ lineHeight: 1.5 }}>{state.personal.resume}</p>
@@ -98,7 +138,14 @@ export default function CurriculumPreview() {
         {/* Habilidades */}
         {state.skills.length > 0 && (
           <section style={{ marginTop: "2rem" }}>
-            <h2 style={{ fontSize: "1.25rem", fontWeight: "600", marginBottom: "0.75rem", color: currentTheme.accent }}>
+            <h2
+              style={{
+                fontSize: "1.25rem",
+                fontWeight: "600",
+                marginBottom: "0.75rem",
+                color: currentTheme.accent,
+              }}
+            >
               Habilidades
             </h2>
             <ul style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
@@ -114,8 +161,9 @@ export default function CurriculumPreview() {
                     color: currentTheme.badgeText,
                   }}
                 >
-                  {skill.name} - 
-                 ( {skill.level})
+                  {typeof skill === "string"
+                    ? skill
+                    : `${skill.name} (${skill.level})`}
                 </li>
               ))}
             </ul>
@@ -125,12 +173,28 @@ export default function CurriculumPreview() {
         {/* Experiências */}
         {state.experiences.length > 0 && (
           <section style={{ marginTop: "2rem" }}>
-            <h2 style={{ fontSize: "1.25rem", fontWeight: "600", marginBottom: "0.75rem", color: currentTheme.accent }}>
+            <h2
+              style={{
+                fontSize: "1.25rem",
+                fontWeight: "600",
+                marginBottom: "0.75rem",
+                color: currentTheme.accent,
+              }}
+            >
               Experiências
             </h2>
             {state.experiences.map((exp, i) => (
-              <div key={i} style={{ borderLeft: `4px solid ${currentTheme.border}`, paddingLeft: "1rem", marginBottom: "1.5rem" }}>
-                <h3 style={{ fontSize: "1.125rem", fontWeight: "700" }}>{exp.position}</h3>
+              <div
+                key={i}
+                style={{
+                  borderLeft: `4px solid ${currentTheme.border}`,
+                  paddingLeft: "1rem",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                <h3 style={{ fontSize: "1.125rem", fontWeight: "700" }}>
+                  {exp.title}
+                </h3>
                 <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
                   {exp.company} | {exp.start} - {exp.end || "Atual"}
                 </p>
@@ -141,12 +205,14 @@ export default function CurriculumPreview() {
         )}
       </div>
 
+      {/* Exportar PDF */}
       <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
         <PDFExporter
-  elementRef={printRef}
-  fileName={`${state.personal.name?.replace(/\s+/g, "_") || "curriculo"}.pdf`}
-/>
-
+          elementRef={printRef}
+          fileName={`${
+            state.personal.name?.replace(/\s+/g, "_") || "curriculo"
+          }.pdf`}
+        />
       </div>
     </div>
   );

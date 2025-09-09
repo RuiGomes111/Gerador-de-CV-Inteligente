@@ -5,7 +5,19 @@ export type CurriculumState = {
     phone: string;
     linkedin: string;
     resume: string;
+    photo: string; // 🔹 novo
   };
-  skills: string[];
-  experiences: { title: string; company: string }[];
+  skills: {
+    id: string;
+    name: string;
+    level: string;
+  }[];
+  experiences: {
+    id: string;
+    position: string;
+    company: string;
+    start: string;
+    end?: string;
+    description: string;
+  }[];
 };
