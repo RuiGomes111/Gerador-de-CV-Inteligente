@@ -6,7 +6,7 @@ import {
   type CurriculumAction,
 } from "../reducers/curriculumReducer";
 
-// 📌 Estado inicial do currículo
+// Estado inicial do currículo
 const initialState: CurriculumState = {
   personal: {
     name: "",
@@ -14,24 +14,23 @@ const initialState: CurriculumState = {
     phone: "",
     linkedin: "",
     resume: "",
-    photo: "", // 🔹 adicionado
   },
   skills: [],
   experiences: [],
 };
 
-// 📌 Tipo do contexto
+// Tipo do contexto
 type CurriculumContextType = {
   state: CurriculumState;
   dispatch: Dispatch<CurriculumAction>;
 };
 
-// 📌 Criando o contexto
+// Criando o contexto
 export const CurriculumContext = createContext<CurriculumContextType | undefined>(
   undefined
 );
 
-// 📌 Provider do contexto
+// Provider do contexto
 export function CurriculumProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(curriculumReducer, initialState);
 
